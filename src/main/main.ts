@@ -8,6 +8,7 @@
  * When running `npm run build` or `npm run build:main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
+import 'v8-compile-cache';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
@@ -23,6 +24,10 @@ export default class AppUpdater {
     autoUpdater.logger = log;
     autoUpdater.checkForUpdatesAndNotify();
   }
+}
+
+if (typeof snapshotResult !== 'undefined') {
+  console.log('snapshotResult available!', snapshotResult);
 }
 
 let mainWindow: BrowserWindow | null = null;

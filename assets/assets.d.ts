@@ -1,5 +1,8 @@
 type Styles = Record<string, string>;
 
+// eslint-disable-next-line no-var, vars-on-top
+declare var snapshotResult: Record<string, string>;
+
 declare module '*.svg' {
   const content: string;
   export default content;

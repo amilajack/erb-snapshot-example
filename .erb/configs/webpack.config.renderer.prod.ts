@@ -4,7 +4,6 @@
 
 import path from 'path';
 import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
@@ -32,11 +31,7 @@ const configuration: webpack.Configuration = {
 
   target: ['web', 'electron-renderer'],
 
-  entry: [
-    'core-js',
-    'regenerator-runtime/runtime',
-    path.join(webpackPaths.srcRendererPath, 'index.tsx'),
-  ],
+  entry: path.join(webpackPaths.srcRendererPath, 'index.tsx'),
 
   output: {
     path: webpackPaths.distRendererPath,
@@ -45,6 +40,7 @@ const configuration: webpack.Configuration = {
     library: {
       type: 'umd',
     },
+    globalObject: 'this',
   },
 
   module: {
@@ -114,18 +110,6 @@ const configuration: webpack.Configuration = {
 
     new BundleAnalyzerPlugin({
       analyzerMode: process.env.ANALYZE === 'true' ? 'server' : 'disabled',
-    }),
-
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: path.join(webpackPaths.srcRendererPath, 'index.ejs'),
-      minify: {
-        collapseWhitespace: true,
-        removeAttributeQuotes: true,
-        removeComments: true,
-      },
-      isBrowser: false,
-      isDevelopment: process.env.NODE_ENV !== 'production',
     }),
   ],
 };
